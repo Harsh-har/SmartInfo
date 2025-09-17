@@ -16,10 +16,10 @@
         "title": "Products",
         "type": "grid",
         "items": [
-          { "title": "Product A", "description": "Best quality product" },
-          { "title": "Product B", "description": "High demand in market" },
-          { "title": "Product A", "description": "Best quality product" },
-          { "title": "Product B", "description": "High demand in market" }
+          { "title": "Smart Home Automation", "description": "Best quality product" },
+          { "title": "Smart Light", "description": "High demand in market" },
+          { "title": "Automation Dustbin", "description": "Affordable and durable" },
+          { "title": "Automatic Switch", "description": "Eco-friendly design" }
         ]
       },
       {
@@ -27,7 +27,8 @@
         "type": "list",
         "items": [
           { "title": "Consulting", "description": "Expert business advice" },
-          { "title": "Support", "description": "24/7 technical support" }
+          { "title": "Support", "description": "24/7 technical support" },
+          { "title": "Training", "description": "Workshops and skill development" }
         ]
       },
       {
@@ -37,12 +38,17 @@
           {
             "title": "Our Mission",
             "description": "To deliver excellence",
-            "image": "assets/images/mission.jpg"
+            "image": "assets/images/logo.png"
           },
           {
             "title": "Our Vision",
             "description": "Innovation for future",
-            "image": "assets/images/vision.jpg"
+            "image": "assets/images/logo.png"
+          },
+          {
+            "title": "Our Values",
+            "description": "Integrity, Customer focus, and Teamwork",
+            "image": "assets/images/logo.png"
           }
         ]
       },
@@ -50,8 +56,9 @@
         "title": "Team",
         "type": "expandable",
         "items": [
-          { "title": "Alice", "description": "CEO with 10 years experience" },
-          { "title": "Bob", "description": "CTO, tech visionary" }
+          { "title": "Harsh", "description": "CEO with 10 years experience" },
+          { "title": "Nikhil", "description": "CTO, tech visionary" },
+          { "title": "Aman", "description": "Head of Marketing, creative strategist" }
         ]
       }
     ]

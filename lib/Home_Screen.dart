@@ -8,7 +8,13 @@ void main() async {
   runApp(MyApp(config: config));
 }
 
-/// Load config.json from assets
+/// ✅ Helper function: safely cast dynamic list into List<Map<String, dynamic>>
+List<Map<String, dynamic>> safeList(dynamic data) {
+  return (data as List<dynamic>? ?? [])
+      .map((e) => Map<String, dynamic>.from(e as Map))
+      .toList();
+}
+
 Future<Map<String, dynamic>> loadConfig() async {
   try {
     final configString = await rootBundle.loadString('assets/config.json');
@@ -19,7 +25,11 @@ Future<Map<String, dynamic>> loadConfig() async {
       "theme": {"primaryColor": "#1976D2", "accentColor": "#2196F3"},
       "appBar": {"title": "Our Company"},
       "drawer": {"headerTitle": "Company Menu"},
-      "gridConfig": {"crossAxisCount": 2, "spacing": 10, "childAspectRatio": 1.0},
+      "gridConfig": {
+        "crossAxisCount": 2,
+        "spacing": 10,
+        "childAspectRatio": 1.0
+      },
       "content": {
         "sections": [
           {
@@ -34,8 +44,14 @@ Future<Map<String, dynamic>> loadConfig() async {
             "title": "Services",
             "type": "expandable",
             "items": [
-              {"title": "Consulting", "description": "We provide expert consulting"},
-              {"title": "Support", "description": "24/7 customer support available"}
+              {
+                "title": "Consulting",
+                "description": "We provide expert consulting"
+              },
+              {
+                "title": "Support",
+                "description": "24/7 customer support available"
+              }
             ]
           },
           {
@@ -45,7 +61,7 @@ Future<Map<String, dynamic>> loadConfig() async {
               {
                 "title": "Who We Are",
                 "description": "We are a leading company",
-                "image": "assets/about.png"
+                "image": "assets/images/logo.png"
               }
             ]
           },
@@ -78,7 +94,6 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  /// Build theme from config
   ThemeData _buildTheme(Map<String, dynamic> config) {
     final theme = config['theme'] ?? {};
     final primaryColor = _parseColor(theme['primaryColor']) ?? Colors.blue;
@@ -99,7 +114,6 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  /// Convert hex string (#RRGGBB) to Color
   Color? _parseColor(String? colorString) {
     if (colorString == null) return null;
     final buffer = StringBuffer();
@@ -110,7 +124,6 @@ class MyApp extends StatelessWidget {
     return Color(int.parse(buffer.toString(), radix: 16));
   }
 
-  /// Create MaterialColor from Color
   MaterialColor _createMaterialColor(Color color) {
     final List strengths = <double>[.05];
     final Map<int, Color> swatch = {};
@@ -150,11 +163,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _sections =
-    List<Map<String, dynamic>>.from(widget.config['content']?['sections'] ?? []);
+    _sections = safeList(widget.config['content']?['sections']);
   }
 
-  /// Build body according to section type
   Widget _buildContentScreen(Map<String, dynamic> section) {
     final String type = section['type'] ?? 'grid';
     switch (type) {
@@ -171,9 +182,8 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  /// Grid View
   Widget _buildGridView(Map<String, dynamic> section) {
-    final items = section['items'] ?? [];
+    final items = safeList(section['items']);
     final gridConfig = widget.config['gridConfig'] ?? {};
     return GridView.builder(
       padding: EdgeInsets.all((gridConfig['spacing'] ?? 8).toDouble()),
@@ -188,9 +198,8 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  /// List View
   Widget _buildListView(Map<String, dynamic> section) {
-    final items = section['items'] ?? [];
+    final items = safeList(section['items']);
     return ListView.builder(
       padding: const EdgeInsets.all(8),
       itemCount: items.length,
@@ -204,18 +213,16 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  /// Cards View
   Widget _buildCardsView(Map<String, dynamic> section) {
-    final items = section['items'] ?? [];
+    final items = safeList(section['items']);
     return ListView(
       padding: const EdgeInsets.all(8),
       children: items.map((item) => _buildFeatureCard(item)).toList(),
     );
   }
 
-  /// Expandable View
   Widget _buildExpandableView(Map<String, dynamic> section) {
-    final items = section['items'] ?? [];
+    final items = safeList(section['items']);
     return ListView(
       children: items.map((item) {
         return ExpansionTile(
@@ -231,7 +238,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  /// Small card (grid item)
   Widget _buildCard(Map<String, dynamic> item) {
     return Card(
       child: Column(
@@ -247,7 +253,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  /// Big card (feature)
   Widget _buildFeatureCard(Map<String, dynamic> item) {
     return Card(
       child: Column(
@@ -292,12 +297,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: const TextStyle(color: Colors.white, fontSize: 24)),
             ),
             for (int i = 0; i < _sections.length; i++)
-              _sections[i]['type'] == 'expandable'
-                  ? ExpansionTile(
+              ExpansionTile(
                 leading: const Icon(Icons.category),
                 title: Text(_sections[i]['title'] ?? 'Section ${i + 1}'),
                 children: [
-                  for (var item in _sections[i]['items'] ?? [])
+                  for (var item in safeList(_sections[i]['items']))
                     ListTile(
                       title: Text(item['title'] ?? ''),
                       onTap: () {
@@ -306,15 +310,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                     )
                 ],
-              )
-                  : ListTile(
-                leading: const Icon(Icons.category),
-                title:
-                Text(_sections[i]['title'] ?? 'Section ${i + 1}'),
-                onTap: () {
-                  setState(() => _selectedIndex = i);
-                  Navigator.pop(context);
-                },
               ),
           ],
         ),
