@@ -1,0 +1,59 @@
+{
+  "appTitle": "Company Info",
+  "theme": {
+    "primaryColor": "#1976D2",
+    "accentColor": "#64B5F6",
+    "appBarTextColor": "#FFFFFF",
+    "appBarElevation": 3
+  },
+  "appBar": { "title": "Our Company" },
+  "drawer": { "headerTitle": "Company Menu" },
+  "gridConfig": { "crossAxisCount": 2, "spacing": 8 },
+  "cardConfig": { "elevation": 4, "cornerRadius": 12 },
+  "content": {
+    "sections": [
+      {
+        "title": "Products",
+        "type": "grid",
+        "items": [
+          { "title": "Product A", "description": "Best quality product" },
+          { "title": "Product B", "description": "High demand in market" },
+          { "title": "Product A", "description": "Best quality product" },
+          { "title": "Product B", "description": "High demand in market" }
+        ]
+      },
+      {
+        "title": "Services",
+        "type": "list",
+        "items": [
+          { "title": "Consulting", "description": "Expert business advice" },
+          { "title": "Support", "description": "24/7 technical support" }
+        ]
+      },
+      {
+        "title": "About Us",
+        "type": "cards",
+        "items": [
+          {
+            "title": "Our Mission",
+            "description": "To deliver excellence",
+            "image": "assets/images/mission.jpg"
+          },
+          {
+            "title": "Our Vision",
+            "description": "Innovation for future",
+            "image": "assets/images/vision.jpg"
+          }
+        ]
+      },
+      {
+        "title": "Team",
+        "type": "expandable",
+        "items": [
+          { "title": "Alice", "description": "CEO with 10 years experience" },
+          { "title": "Bob", "description": "CTO, tech visionary" }
+        ]
+      }
+    ]
+  }
+}
