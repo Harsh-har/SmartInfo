@@ -1,13 +1,13 @@
 {
   "appTitle": "Company Info",
   "theme": {
-    "primaryColor": "#1976D2",
+    "primaryColor": "#F3F4F6",
     "accentColor": "#64B5F6",
     "appBarTextColor": "#FFFFFF",
     "appBarElevation": 3
   },
-  "appBar": { "title": "Our Company" },
-  "drawer": { "headerTitle": "Company Menu" },
+  "appBar": { "title": "Swaja Robotics" },
+  "drawer": { "headerTitle": "Swaja Menu" },
   "gridConfig": { "crossAxisCount": 2, "spacing": 8 },
   "cardConfig": { "elevation": 4, "cornerRadius": 12 },
   "content": {
@@ -16,11 +16,24 @@
         "title": "Products",
         "type": "grid",
         "items": [
-          { "title": "Smart Home Automation", "description": "Best quality product" },
-          { "title": "Smart Light", "description": "High demand in market" },
-          { "title": "Automation Dustbin", "description": "Affordable and durable" },
-          { "title": "Automatic Switch", "description": "Eco-friendly design" }
+          { "title": "Smart Home Automation",
+            "description": "Control appliances easily.",
+            "icon": "assets/images/home.jpg"
+          },
+          { "title": "Smart Light",
+            "description": "Energy-efficient and stylish.",
+            "icon": "assets/images/lightt.png"
+          },
+          { "title": "Automation Dustbin",
+            "description": "Hands-free and durable.",
+            "icon": "assets/images/dustbin.jpg"
+          },
+          { "title": "Automatic Switch",
+            "description": "Eco-friendly & convenient.",
+            "icon": "assets/images/home.jpg"
+          }
         ]
+
       },
       {
         "title": "Services",
@@ -38,17 +51,17 @@
           {
             "title": "Our Mission",
             "description": "To deliver excellence",
-            "image": "assets/images/logo.png"
+            "image": "assets/images/mission.png"
           },
           {
             "title": "Our Vision",
             "description": "Innovation for future",
-            "image": "assets/images/logo.png"
+            "image": "assets/images/vision.png"
           },
           {
             "title": "Our Values",
             "description": "Integrity, Customer focus, and Teamwork",
-            "image": "assets/images/logo.png"
+            "image": "assets/images/our.png"
           }
         ]
       },

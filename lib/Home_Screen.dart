@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
 
+import 'WorkInProgressScreen.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final config = await loadConfig();
@@ -146,7 +148,6 @@ class MyApp extends StatelessWidget {
     return MaterialColor(color.value, swatch);
   }
 }
-
 class HomeScreen extends StatefulWidget {
   final Map<String, dynamic> config;
 
@@ -182,6 +183,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  // GridView with dynamic icons/images
   Widget _buildGridView(Map<String, dynamic> section) {
     final items = safeList(section['items']);
     final gridConfig = widget.config['gridConfig'] ?? {};
@@ -198,6 +200,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  // ListView with dynamic icons
   Widget _buildListView(Map<String, dynamic> section) {
     final items = safeList(section['items']);
     return ListView.builder(
@@ -205,7 +208,9 @@ class _HomeScreenState extends State<HomeScreen> {
       itemCount: items.length,
       itemBuilder: (context, index) => Card(
         child: ListTile(
-          leading: const Icon(Icons.label),
+          leading: items[index]['icon'] != null
+              ? Image.asset(items[index]['icon'], width: 30, height: 30)
+              : const Icon(Icons.label),
           title: Text(items[index]['title'] ?? ''),
           subtitle: Text(items[index]['description'] ?? ''),
         ),
@@ -213,6 +218,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  // Cards view (feature cards)
   Widget _buildCardsView(Map<String, dynamic> section) {
     final items = safeList(section['items']);
     return ListView(
@@ -221,11 +227,15 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  // Expandable tiles with dynamic icons
   Widget _buildExpandableView(Map<String, dynamic> section) {
     final items = safeList(section['items']);
     return ListView(
       children: items.map((item) {
         return ExpansionTile(
+          leading: item['icon'] != null
+              ? Image.asset(item['icon'], width: 24, height: 24)
+              : const Icon(Icons.category),
           title: Text(item['title'] ?? ''),
           children: [
             Padding(
@@ -238,21 +248,39 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  // Card widget for GridView
   Widget _buildCard(Map<String, dynamic> item) {
-    return Card(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Icons.info, size: 40),
-          const SizedBox(height: 8),
-          Text(item['title'] ?? '',
-              style: const TextStyle(fontWeight: FontWeight.bold)),
-          Text(item['description'] ?? ''),
-        ],
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => WorkInProgressScreen(
+              title: item['title'] ?? 'Details',
+            ),
+          ),
+        );
+      },
+      child: Card(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (item['icon'] != null)
+              Image.asset(item['icon'], height: 40, width: 40)
+            else
+              const Icon(Icons.info, size: 40),
+            const SizedBox(height: 8),
+            Text(item['title'] ?? '',
+                style: const TextStyle(fontWeight: FontWeight.bold)),
+            Text(item['description'] ?? ''),
+          ],
+        ),
       ),
     );
   }
 
+
+  // Feature card for Cards view
   Widget _buildFeatureCard(Map<String, dynamic> item) {
     return Card(
       child: Column(
@@ -261,6 +289,11 @@ class _HomeScreenState extends State<HomeScreen> {
           if (item['image'] != null)
             Image.asset(item['image'],
                 height: 150, width: double.infinity, fit: BoxFit.cover),
+          if (item['icon'] != null && item['image'] == null)
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Image.asset(item['icon'], height: 40, width: 40),
+            ),
           Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -298,11 +331,16 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             for (int i = 0; i < _sections.length; i++)
               ExpansionTile(
-                leading: const Icon(Icons.category),
+                leading: _sections[i]['icon'] != null
+                    ? Image.asset(_sections[i]['icon'], width: 24, height: 24)
+                    : const Icon(Icons.category),
                 title: Text(_sections[i]['title'] ?? 'Section ${i + 1}'),
                 children: [
                   for (var item in safeList(_sections[i]['items']))
                     ListTile(
+                      leading: item['icon'] != null
+                          ? Image.asset(item['icon'], width: 24, height: 24)
+                          : null,
                       title: Text(item['title'] ?? ''),
                       onTap: () {
                         setState(() => _selectedIndex = i);

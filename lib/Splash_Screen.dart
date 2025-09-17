@@ -73,9 +73,9 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
               child: ScaleTransition(
                 scale: _scaleAnimation,
                 child: Image.asset(
-                  "assets/images/logo.png",
-                  height: 200,
-                  width: 200,
+                  "assets/images/splashlogo.png",
+                  height: 300,
+                  width: 300,
                   errorBuilder: (context, error, stackTrace) {
                     return const Icon(Icons.error_outline, size: 100, color: Colors.red);
                   },
@@ -85,14 +85,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
             const SizedBox(height: 30),
             FadeTransition(
               opacity: _fadeAnimation,
-              child: const Text(
-                "SmartInfo",
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
+
             ),
             const SizedBox(height: 30),
             CircularProgressIndicator(
