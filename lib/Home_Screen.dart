@@ -10,7 +10,7 @@ void main() async {
   runApp(MyApp(config: config));
 }
 
-/// ✅ Helper function: safely cast dynamic list into List<Map<String, dynamic>>
+
 List<Map<String, dynamic>> safeList(dynamic data) {
   return (data as List<dynamic>? ?? [])
       .map((e) => Map<String, dynamic>.from(e as Map))
@@ -183,7 +183,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  // GridView with dynamic icons/images
+
   Widget _buildGridView(Map<String, dynamic> section) {
     final items = safeList(section['items']);
     final gridConfig = widget.config['gridConfig'] ?? {};
@@ -200,7 +200,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // ListView with dynamic icons
   Widget _buildListView(Map<String, dynamic> section) {
     final items = safeList(section['items']);
     return ListView.builder(
@@ -218,7 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // Cards view (feature cards)
+
   Widget _buildCardsView(Map<String, dynamic> section) {
     final items = safeList(section['items']);
     return ListView(
@@ -227,7 +226,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // Expandable tiles with dynamic icons
   Widget _buildExpandableView(Map<String, dynamic> section) {
     final items = safeList(section['items']);
     return ListView(
@@ -248,7 +246,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // Card widget for GridView
+
   Widget _buildCard(Map<String, dynamic> item) {
     return InkWell(
       onTap: () {
@@ -280,7 +278,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
 
-  // Feature card for Cards view
+
   Widget _buildFeatureCard(Map<String, dynamic> item) {
     return Card(
       child: Column(

@@ -7,7 +7,10 @@
     "appBarElevation": 3
   },
   "appBar": { "title": "Swaja Robotics" },
-  "drawer": { "headerTitle": "Swaja Menu" },
+  "drawer": {
+    "headerTitle": "Swaja Menu",
+    "headerBackgroundColor": "#64B5F6"
+  },
   "gridConfig": { "crossAxisCount": 2, "spacing": 8 },
   "cardConfig": { "elevation": 4, "cornerRadius": 12 },
   "content": {
